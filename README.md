@@ -59,6 +59,6 @@ To access the api of the project.
 
 ## 8. View the documentation
 
-Replace {{ tenant123 }} with your tenant name your create. in your env file
+Replace {{ tenant123 }} with your tenant name you create in your env file
 
 L5_SWAGGER_CONST_HOST1="http://${APP_URLs}/tenant123"
