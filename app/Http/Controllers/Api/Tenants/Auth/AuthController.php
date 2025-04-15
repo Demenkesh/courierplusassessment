@@ -166,7 +166,7 @@ class AuthController extends Controller
             $user->password = Hash::make($request->password);
             $user->verification_code = $randomNumber;
             $user->verified_by_admin = 0;
-            $user->save();
+
 
 
             // tenancy start
@@ -182,8 +182,11 @@ class AuthController extends Controller
             // dd($domain );
             $role = 'tenantadmin';
             $tenant->domains()->create(['domain' => $main_domains]);
-            $user->tenants()->attach($tenant->id, ['role_as' => $role]);
 
+            $user->tenant_id = $request->tenant_name;
+            $user->save();
+
+            $user->tenants()->attach($tenant->id, ['role_as' => $role]);
 
             // Log in the user
             Auth::login($user);
@@ -517,6 +520,7 @@ class AuthController extends Controller
      *     )
      * )
      */
+
 
 
 

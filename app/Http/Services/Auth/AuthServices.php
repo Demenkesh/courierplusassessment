@@ -153,8 +153,15 @@ class AuthServices
     {
         try {
             $email = $request->email;
-            $user_id = User::where('email', $email)->first();
 
+            $user_id = User::where('email', $email)->first();
+            // Check if user exists
+            if (!$user_id) {
+                return response()->json([
+                    'status' => false,
+                    'error' => 'User not found with the provided email.',
+                ], Response::HTTP_NOT_FOUND);
+            }
             // request from the user type input
             $code = $request->input('code');
 
@@ -176,7 +183,6 @@ class AuthServices
 
                     $user_id->update([
                         'verification_code' => null,
-                        'tenant_id' => tenant('id'),
                     ]);
                 }
             } else {
@@ -222,7 +228,7 @@ class AuthServices
         // $user_unverified->email = $request->email;
         $user_id->token = $randomNumber;
 
-        Mail::to($mail['email'])->send(new Mails($mail , $request->email));
+        Mail::to($mail['email'])->send(new Mails($mail, $request->email));
 
         $user_id->update();
 

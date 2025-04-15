@@ -22,6 +22,10 @@ Use the latest php Version 8.3 upper
 composer update
 ```
 
+```bash
+composer dump-autoload
+```
+
 ## 4. Set Up Environment Configuration
 
 Copy the .env.example file and update the necessary environment variables:
